@@ -2,23 +2,23 @@ name: Daily Commit Workflow - 24f2002696@ds.study.iitm.ac.in
 
 on:
   schedule:
-    - cron: '30 12 * * *'  # Runs daily at 12:30 PM UTC
-  workflow_dispatch:  # Allows manual trigger for testing
+    - cron: '30 12 * * *'
+  workflow_dispatch:
 
 jobs:
   daily-commit:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       
       - name: Configure Git with email 24f2002696@ds.study.iitm.ac.in
         run: |
-          git config --global user.email "24f2002696@ds.study.iitm.ac.in"
-          git config --global user.name "GitHub Action Bot"
+          git config user.email "24f2002696@ds.study.iitm.ac.in"
+          git config user.name "GitHub Action Bot"
       
       - name: Create daily commit
         run: |
@@ -29,6 +29,4 @@ jobs:
       
       - name: Push commit to repository
         run: |
-          git push origin ${{ github.ref }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          git push
